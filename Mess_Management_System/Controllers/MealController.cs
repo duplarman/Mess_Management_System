@@ -38,15 +38,15 @@ namespace Mess_Management_System.Controllers
             }
             return View(meal);
         }
-        public JsonResult GetMealEvents()
-        {
-            var meals = _mealService.GetAll();
-            var events = meals.Select(m => new {
-                title = $"Meal - {m.Breakfast + m.Lunch + m.Dinner}",
-                start = m.MealDate.ToString("yyyy-MM-dd")
-            });
-            return Json(events, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult GetMealEvents()
+        //{
+        //    var meals = _mealService.GetAll();
+        //    var events = meals.Select(m => new {
+        //        title = $"Meal - {m.Breakfast + m.Lunch + m.Dinner}",
+        //        start = m.MealDate.ToString("yyyy-MM-dd")
+        //    });
+        //    return Json(events, JsonRequestBehavior.AllowGet);
+        //}
 
     }
 }

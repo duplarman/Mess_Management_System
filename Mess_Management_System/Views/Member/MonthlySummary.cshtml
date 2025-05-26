@@ -1,0 +1,79 @@
+@model IEnumerable<Mess_Management_System.Models.MonthlySummary>
+
+@{
+    ViewBag.Title = "Monthly Summary";
+    var member = ViewBag.Member as Mess_Management_System.Models.Member;
+    var year = (int)ViewBag.Year;
+    var month = (int)ViewBag.Month;
+}
+
+<div class="container-fluid">
+    <h2>Monthly Summary - @member.Name</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Select Month</h5>
+                    <form method="get" class="form-inline">
+                        <input type="hidden" name="id" value="@member.Id" />
+                        <div class="form-group mx-sm-3">
+                            <label for="year" class="mr-2">Year:</label>
+                            <select class="form-control" id="year" name="year">
+                                @for (int y = DateTime.Now.Year; y >= DateTime.Now.Year - 2; y--)
+                                {
+                                    <option value="@y" @(y == year ? "selected" : "")>@y</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group mx-sm-3">
+                            <label for="month" class="mr-2">Month:</label>
+                            <select class="form-control" id="month" name="month">
+                                @for (int m = 1; m <= 12; m++)
+                                {
+                                    <option value="@m" @(m == month ? "selected" : "")>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">View</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Summary for @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) @year</h5>
+                    <hr />
+                    @if (Model.Any())
+                    {
+                        var summary = Model.First();
+                        <dl class="dl-horizontal">
+                            <dt>Total Meals</dt>
+                            <dd>@summary.TotalMeals</dd>
+
+                            <dt>Total Payment</dt>
+                            <dd>@summary.TotalPayment.ToString("C")</dd>
+
+                            <dt>Total Due</dt>
+                            <dd>@summary.TotalDue.ToString("C")</dd>
+                        </dl>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            No summary available for the selected month.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        @Html.ActionLink("Back to Member Details", "Details", new { id = member.Id }, new { @class = "btn btn-secondary" })
+    </div>
+</div> 

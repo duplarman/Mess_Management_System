@@ -1,17 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mess_Management_System.Models
 {
     public class Market
     {
-        public int MarketId { get; set; }
-        public string ItemName { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime PurchaseDate { get; set; }
-        public string PurchasedBy { get; set; }
-    }
+        [Key]
+        public int Id { get; set; }
 
+        [Required]
+        public DateTime Date { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string Description { get; set; }
+
+        [Required]
+        [Range(0, double.MaxValue)]
+        public decimal Amount { get; set; }
+
+        [StringLength(100)]
+        public string ReceiptNo { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+    }
 }

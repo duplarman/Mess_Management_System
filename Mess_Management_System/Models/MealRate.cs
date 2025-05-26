@@ -1,16 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mess_Management_System.Models
 {
     public class MealRate
     {
-        public int MealRateId { get; set; }
-        public decimal TotalMarket { get; set; }
-        public int TotalMeals { get; set; }
-        public decimal RatePerMeal { get; set; }
-        public DateTime Month { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public int Year { get; set; }
+
+        [Required]
+        public int Month { get; set; }
+
+        [Required]
+        [Range(0, double.MaxValue)]
+        public decimal Rate { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        public DateTime? UpdatedAt { get; set; }
     }
 }
