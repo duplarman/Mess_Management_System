@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Mess_Management_System.Models.Meal>
+
+<table class="table">
+    <tr>
+        <th>Date</th>
+        <th>Breakfast</th>
+        <th>Lunch</th>
+        <th>Dinner</th>
+    </tr>
+    @foreach (var meal in Model)
+    {
+        <tr>
+            <td>@meal.MealDate.ToShortDateString()</td>
+            <td>@meal.Breakfast</td>
+            <td>@meal.Lunch</td>
+            <td>@meal.Dinner</td>
+        </tr>
+    }
+</table>
+<div id="calendar"></div>
+<script>
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            events: '/Meal/GetMealEvents' // return JSON list of meals
+        });
+    });
+</script>
