@@ -1,19 +1,16 @@
-﻿using Mess_Management_System.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using Mess_Management_System.Models;
 
-namespace Mess_Management_System.Services.Interfaces
+namespace Mess_Management_System.Services
 {
-    public interface IMealService
+    public interface IMealService 
     {
-        Meal GetById(int id);
-        IEnumerable<Meal> GetAll();
-        void Add(Meal meal);
-        void Update(Meal meal);
-        void Delete(int id);
         IEnumerable<Meal> GetMealsByDate(DateTime date);
+        IEnumerable<Meal> GetMealsByMember(int memberId, DateTime startDate, DateTime endDate);
+        int GetTotalMealsByMember(int memberId, int year, int month);
+        DataTable GetDailyMealSummary(DateTime date);
+        DataTable GetMonthlyMealSummary(int year, int month);
     }
-}
+} 

@@ -1,4 +1,5 @@
 ﻿using Mess_Management_System.Models;
+using Mess_Management_System.Services;
 using Mess_Management_System.Services.Implementation;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Unity;
+using Unity.AspNet.Mvc;
 
 namespace Mess_Management_System
 {
@@ -14,8 +17,23 @@ namespace Mess_Management_System
     {
         protected void Application_Start()
         {
-            var context = new MessDbContext();
-            var memberService = new MemberService(context);
+            var container = new UnityContainer();
+            
+            // Register DbContext
+            container.RegisterType<ApplicationDbContext>();
+            
+            // Register Services
+            container.RegisterType<IMealService, MealService>();
+            container.RegisterType<IMemberService, MemberService>();
+            container.RegisterType<IPaymentService, PaymentService>();
+            container.RegisterType<IMonthlySummaryService, MonthlySummaryService>();
+            container.RegisterType<IMealRateService, MealRateService>();
+            container.RegisterType<IMarketService, MarketService>();
+            container.RegisterType<INoticeService, NoticeService>();
+
+            // Set the dependency resolver
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

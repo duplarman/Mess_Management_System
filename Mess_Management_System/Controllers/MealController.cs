@@ -1,5 +1,5 @@
 ﻿using Mess_Management_System.Models;
-using Mess_Management_System.Services.Interfaces;
+using Mess_Management_System.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,15 +38,16 @@ namespace Mess_Management_System.Controllers
             }
             return View(meal);
         }
-        //public JsonResult GetMealEvents()
-        //{
-        //    var meals = _mealService.GetAll();
-        //    var events = meals.Select(m => new {
-        //        title = $"Meal - {m.Breakfast + m.Lunch + m.Dinner}",
-        //        start = m.MealDate.ToString("yyyy-MM-dd")
-        //    });
-        //    return Json(events, JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult GetMealEvents()
+        {
+            var meals = _mealService.GetAll();
+            var events = meals.Select(m => new
+            {
+                title = $"Meal - {m.Breakfast + m.Lunch + m.Dinner}",
+                start = m.MealDate.ToString("yyyy-MM-dd")
+            });
+            return Json(events, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

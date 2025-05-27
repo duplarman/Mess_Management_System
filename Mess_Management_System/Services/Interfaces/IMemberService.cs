@@ -1,18 +1,16 @@
-﻿using Mess_Management_System.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using Mess_Management_System.Models;
 
-namespace Mess_Management_System.Services.Interfaces
+namespace Mess_Management_System.Services
 {
-    public interface IMemberService
+    public interface IMemberService : IBaseService<Member>
     {
-        Member GetById(int id);
-        IEnumerable<Member> GetAll();
-        void Create(Member member);
-        void Update(Member member);
-        void Delete(int id);
+        IEnumerable<Member> GetActiveMembers();
+        decimal GetCurrentBalance(int memberId);
+        IEnumerable<MonthlySummary> GetMonthlySummary(int memberId, int year, int month);
+        DataTable GetMemberMealHistory(int memberId, DateTime startDate, DateTime endDate);
+        DataTable GetMemberPaymentHistory(int memberId, DateTime startDate, DateTime endDate);
     }
-}
+} 
